@@ -1,4 +1,12 @@
-//
-// Created by piotr on 06.06.2022.
-//
+#include<iostream>
+#include "Cipher.hpp"
 
+namespace cipher {
+    int key;
+
+    auto Cipher::seKey(int key){
+        this -> key = key;
+    }
+
+
+}
