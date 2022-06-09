@@ -40,6 +40,45 @@ include CMakeFiles/rules.ninja
 # Logical path to working directory; prefix for absolute paths.
 
 cmake_ninja_workdir = G$:/szkola/PJC/PasswordManagerCPP/cmake-build-debug/
+# =============================================================================
+# Object build statements for EXECUTABLE target PasswordManagerCPP
+
+
+#############################################
+# Order-only phony target for PasswordManagerCPP
+
+build cmake_object_order_depends_target_PasswordManagerCPP: phony || CMakeFiles/PasswordManagerCPP.dir
+
+build CMakeFiles/PasswordManagerCPP.dir/main.cpp.obj: CXX_COMPILER__PasswordManagerCPP_Debug G$:/szkola/PJC/PasswordManagerCPP/main.cpp || cmake_object_order_depends_target_PasswordManagerCPP
+  DEP_FILE = CMakeFiles\PasswordManagerCPP.dir\main.cpp.obj.d
+  FLAGS = -g -std=gnu++20
+  OBJECT_DIR = CMakeFiles\PasswordManagerCPP.dir
+  OBJECT_FILE_DIR = CMakeFiles\PasswordManagerCPP.dir
+
+build CMakeFiles/PasswordManagerCPP.dir/Cipher.cpp.obj: CXX_COMPILER__PasswordManagerCPP_Debug G$:/szkola/PJC/PasswordManagerCPP/Cipher.cpp || cmake_object_order_depends_target_PasswordManagerCPP
+  DEP_FILE = CMakeFiles\PasswordManagerCPP.dir\Cipher.cpp.obj.d
+  FLAGS = -g -std=gnu++20
+  OBJECT_DIR = CMakeFiles\PasswordManagerCPP.dir
+  OBJECT_FILE_DIR = CMakeFiles\PasswordManagerCPP.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PasswordManagerCPP
+
+
+#############################################
+# Link the executable PasswordManagerCPP.exe
+
+build PasswordManagerCPP.exe: CXX_EXECUTABLE_LINKER__PasswordManagerCPP_Debug CMakeFiles/PasswordManagerCPP.dir/main.cpp.obj CMakeFiles/PasswordManagerCPP.dir/Cipher.cpp.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\PasswordManagerCPP.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = PasswordManagerCPP.exe
+  TARGET_IMPLIB = libPasswordManagerCPP.dll.a
+  TARGET_PDB = PasswordManagerCPP.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -66,6 +105,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
+build PasswordManagerCPP: phony PasswordManagerCPP.exe
+
 # =============================================================================
 # Folder targets.
 
@@ -74,7 +115,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: G:/szkola/PJC/PasswordManagerCPP/cmake-build-debug
 
-build all: phony
+build all: phony PasswordManagerCPP.exe
 
 # =============================================================================
 # Built-in targets

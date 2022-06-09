@@ -6,6 +6,7 @@
 #include <sstream>
 #include <ctime>
 #include <dirent.h>
+#include "Cipher.hpp"
 
 
 namespace log {
@@ -14,10 +15,10 @@ namespace log {
 namespace sort {
 
 }
-auto prin
 
 auto main() -> int{
 
+    std::cout<<"Type 'h' to see available operations."<<std::endl;
 
 
 }
