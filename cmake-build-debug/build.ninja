@@ -67,6 +67,12 @@ build CMakeFiles/PasswordManagerCPP.dir/Operations.cpp.obj: CXX_COMPILER__Passwo
   OBJECT_DIR = CMakeFiles\PasswordManagerCPP.dir
   OBJECT_FILE_DIR = CMakeFiles\PasswordManagerCPP.dir
 
+build CMakeFiles/PasswordManagerCPP.dir/Login.cpp.obj: CXX_COMPILER__PasswordManagerCPP_Debug G$:/szkola/PJC/PasswordManagerCPP/Login.cpp || cmake_object_order_depends_target_PasswordManagerCPP
+  DEP_FILE = CMakeFiles\PasswordManagerCPP.dir\Login.cpp.obj.d
+  FLAGS = -g -std=gnu++20
+  OBJECT_DIR = CMakeFiles\PasswordManagerCPP.dir
+  OBJECT_FILE_DIR = CMakeFiles\PasswordManagerCPP.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target PasswordManagerCPP
@@ -75,7 +81,7 @@ build CMakeFiles/PasswordManagerCPP.dir/Operations.cpp.obj: CXX_COMPILER__Passwo
 #############################################
 # Link the executable PasswordManagerCPP.exe
 
-build PasswordManagerCPP.exe: CXX_EXECUTABLE_LINKER__PasswordManagerCPP_Debug CMakeFiles/PasswordManagerCPP.dir/main.cpp.obj CMakeFiles/PasswordManagerCPP.dir/Cipher.cpp.obj CMakeFiles/PasswordManagerCPP.dir/Operations.cpp.obj
+build PasswordManagerCPP.exe: CXX_EXECUTABLE_LINKER__PasswordManagerCPP_Debug CMakeFiles/PasswordManagerCPP.dir/main.cpp.obj CMakeFiles/PasswordManagerCPP.dir/Cipher.cpp.obj CMakeFiles/PasswordManagerCPP.dir/Operations.cpp.obj CMakeFiles/PasswordManagerCPP.dir/Login.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\PasswordManagerCPP.dir

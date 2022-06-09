@@ -8,28 +8,30 @@
 #include <dirent.h>
 #include "Cipher.hpp"
 #include "Operations.hpp"
+#include "Login.hpp"
 
 
 auto main() -> int{
-    bool isLogIn = false;
+    bool isLogIn = true; // zmienic na false
     bool quit = false;
     int choiceOption;
     std::string fileName;
 
-    while(!isLogIn)
+    /*while(!isLogIn)
         isLogIn = log::verifyAccess();
+        login::login();*/
 
     if(isLogIn)
     {
 
-        time_t timeNow = time(0);
-        log::saveLoginTimestamp(timeNow);
+        //time_t timeNow = time(0);
+        //log::saveLoginTimestamp(timeNow);
 
         while(!quit)
         {
 
             std::cout << "Welcome to the Password Manager!" << std::endl;
-            std::cout << "Type '9' to see help." << std::endl;
+            std::cout << "Type '8' to see help." << std::endl;
             std::cout << "Enter operation: " << std::endl;
 
             std::cin >> choiceOption;
@@ -39,9 +41,11 @@ auto main() -> int{
             {
                 case 1:
                     std::cout << "You chose 'search password'" << std::endl;
+                    std::cout << cipher::encrypt("{ewrfdsf", 100000) << std::endl;
                     break;
                 case 2:
                     std::cout << "You chose 'sort passwords'" << std::endl;
+                    std::cout << cipher::dcrypt(cipher::encrypt("{ewrfdsf", 100000), 100000) << std::endl;
                     break;
                 case 3:
                     std::cout << "You chose 'add password'" << std::endl;

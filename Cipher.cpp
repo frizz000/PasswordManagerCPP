@@ -1,46 +1,21 @@
 #include <iostream>
 #include "Cipher.hpp"
+#include <ranges>
+
 
 namespace cipher{
-    auto encrypt(const std::string& message, const int key) -> std::string {
-        std::string encryptedMessage;
-        for (auto ch : message) {
-            if (ch >= 'a' && ch <= 'z') {
-                ch = ch + key;
-                if (ch > 'z') {
-                    ch = ch - 'z' + 'a' - 1;
-                }
-                encryptedMessage += ch;
-            } else if (ch >= 'A' && ch <= 'Z') {
-                ch = ch + key;
-                if (ch > 'Z') {
-                    ch = ch - 'Z' + 'A' - 1;
-                }
-                encryptedMessage += ch;
-            } else {
-                encryptedMessage += ch;
-            }
+    auto encrypt(const std::string& message, const std::uint32_t key) -> std::string {
+        std::string encryptedMessage; encryptedMessage.reserve(message.size());
+        for (auto ch : message | std::views::transform([] (char ch) { return (unsigned char)(ch); })) {
+            encryptedMessage+=(ch+key);
         }
         return encryptedMessage;
     }
-    auto dcrypt(const std::string& message, const int key) -> std::string {
-        std::string decryptedMessage;
-        for (auto ch : message) {
-            if (ch >= 'a' && ch <= 'z') {
-                ch = ch - key;
-                if (ch < 'a') {
-                    ch = ch + 'z' - 'a' + 1;
-                }
-                decryptedMessage += ch;
-            } else if (ch >= 'A' && ch <= 'Z') {
-                ch = ch - key;
-                if (ch < 'A') {
-                    ch = ch + 'Z' - 'A' + 1;
-                }
-                decryptedMessage += ch;
-            } else {
-                decryptedMessage += ch;
-            }
+
+    auto dcrypt(const std::string& message, const std::uint32_t key) -> std::string {
+        std::string decryptedMessage; decryptedMessage.reserve(message.size());
+        for (auto ch : message | std::views::transform([] (char ch) { return (unsigned char)(ch); })) {
+            decryptedMessage+=(ch-key);
         }
         return decryptedMessage;
     }

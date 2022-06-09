@@ -3,4 +3,4 @@ project(PasswordManagerCPP)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(PasswordManagerCPP main.cpp Cipher.cpp Cipher.hpp Operations.cpp Operations.hpp)
+add_executable(PasswordManagerCPP main.cpp Cipher.cpp Cipher.hpp Operations.cpp Operations.hpp Login.cpp Login.hpp)
