@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Cipher.hpp"
 
 namespace cipher{
     auto encrypt(const std::string& message, const int key) -> std::string {

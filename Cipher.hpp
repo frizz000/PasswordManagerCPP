@@ -2,5 +2,5 @@
 #include <iostream>
 
 namespace cipher {
-    auto encrypt() -> void;
+    auto encrypt(const std::string& message, const int key) -> std::string;
 }
