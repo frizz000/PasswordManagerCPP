@@ -60,7 +60,7 @@ auto main() -> int{
                     break;
                 case 8:
                     std::cout << "You chose 'help menu'" << std::endl;
-                    cipher::help();
+                    operations::help();
                     break;
                 case 9:
                     std::cout << "You chose 'quit program'" << std::endl;

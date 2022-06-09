@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Operations.hpp"
 
 namespace operations{
     auto help() -> void {
