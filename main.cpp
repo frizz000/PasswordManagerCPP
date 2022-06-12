@@ -12,17 +12,28 @@
 
 
 auto main() -> int{
-    bool isLogIn = true; // zmienic na false
+    bool isLogIn = false;
     bool quit = false;
     int choiceOption;
     std::string fileName;
+    int logAttempts = 0;
 
-    /*while(!isLogIn)
-        isLogIn = log::verifyAccess();
-        login::login();*/
 
-    if(isLogIn)
-    {
+    while(!isLogIn){
+        std::cout << "LOG IN" << std::endl;
+        isLogIn = login::loginIn();
+        logAttempts++;
+        if(logAttempts >= 3){
+            std::cout << "You have exceeded the number of attempts" << std::endl;
+            exit(0);
+        }
+    }
+
+
+    if(isLogIn) {
+
+
+
 
         //time_t timeNow = time(0);
         //log::saveLoginTimestamp(timeNow);
@@ -41,11 +52,11 @@ auto main() -> int{
             {
                 case 1:
                     std::cout << "You chose 'search password'" << std::endl;
-                    std::cout << cipher::encrypt("{ewrfdsf", 100000) << std::endl;
+                    std::cout << cipher::encrypt("ELO123", 123) << std::endl;
                     break;
                 case 2:
                     std::cout << "You chose 'sort passwords'" << std::endl;
-                    std::cout << cipher::dcrypt(cipher::encrypt("{ewrfdsf", 100000), 100000) << std::endl;
+                    std::cout << cipher::dcrypt(cipher::encrypt("ELO123", 123), 123) << std::endl;
                     break;
                 case 3:
                     std::cout << "You chose 'add password'" << std::endl;
@@ -75,6 +86,8 @@ auto main() -> int{
                     break;
             }
         }
+    } else {
+        std::cout << "You have reached the maximum number of login attempts." << std::endl;
     }
 }
 

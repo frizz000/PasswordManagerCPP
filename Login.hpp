@@ -2,5 +2,5 @@
 #include <iostream>
 
 namespace login {
-    auto login() -> void;
+    auto loginIn() -> bool;
 }
