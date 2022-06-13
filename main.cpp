@@ -20,10 +20,11 @@ auto main() -> int{
 
 
     while(!isLogIn){
+        std::cout << "Welcome to the Password Manager!" << std::endl;
         std::cout << "LOG IN" << std::endl;
         isLogIn = login::loginIn();
         logAttempts++;
-        if(logAttempts >= 3){
+        if(logAttempts > 3){
             std::cout << "You have exceeded the number of attempts" << std::endl;
             exit(0);
         }
@@ -32,18 +33,18 @@ auto main() -> int{
 
     if(isLogIn) {
 
-
-
-
-        //time_t timeNow = time(0);
-        //log::saveLoginTimestamp(timeNow);
+        time_t timeNow = time(0);
+        login::saveTime(timeNow);
 
         while(!quit)
         {
-
-            std::cout << "Welcome to the Password Manager!" << std::endl;
-            std::cout << "Type '8' to see help." << std::endl;
-            std::cout << "Enter operation: " << std::endl;
+            std::cout << "Available operations: " << std::endl;;
+            std::cout << "1: search password    6: add category" << std::endl;
+            std::cout << "2: sort passwords     7: remove category" << std::endl;
+            std::cout << "3: add password       8: help menu" << std::endl;
+            std::cout << "4: edit password      9: quit program" << std::endl;
+            std::cout << "5: remove password \n" << std::endl;
+            std::cout << "Enter operation: ";
 
             std::cin >> choiceOption;
 
@@ -86,8 +87,6 @@ auto main() -> int{
                     break;
             }
         }
-    } else {
-        std::cout << "You have reached the maximum number of login attempts." << std::endl;
     }
 }
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <ctime>
 #include "Login.hpp"
 #include "Cipher.hpp"
 
@@ -26,16 +27,31 @@ namespace login {
             globalPass = "123";
 
             if (userPassword == globalPass) {
-                std::cout << "Correct password" << std::endl;
+                std::cout << "Correct password \n" << std::endl;
                 file.close();
                 return true;
             } else {
-                std::cout << "Incorrect password" << std::endl;
+                std::cout << "Incorrect password, try again (remember you have 3 attempts) \n" << std::endl;
                 return false;
             }
 
         //} else
            // std::cout << "Access to file denied" << std::endl;
        // return false;
+    }
+    auto saveTime(time_t time) -> void {
+
+        std::ofstream loginsOut;
+        loginsOut.open("files/test.txt", std::ofstream::out | std::ofstream::trunc);
+
+        if (loginsOut.is_open()) {
+
+            char *dt = std::ctime(&time);
+            loginsOut << dt;
+
+        } else
+            std::cout << "Can't open logins.txt";
+
+        loginsOut.close();
     }
 }

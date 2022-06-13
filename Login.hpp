@@ -3,4 +3,5 @@
 
 namespace login {
     auto loginIn() -> bool;
+    auto saveTime(time_t time) -> void;
 }
