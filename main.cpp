@@ -53,11 +53,11 @@ auto main() -> int{
             {
                 case 1:
                     std::cout << "You chose 'search password'" << std::endl;
-                    std::cout << cipher::encrypt("ELO123", 123) << std::endl;
+                    std::cout << cipher::encrypt("123321", 5) << std::endl;
                     break;
                 case 2:
                     std::cout << "You chose 'sort passwords'" << std::endl;
-                    std::cout << cipher::dcrypt(cipher::encrypt("ELO123", 123), 123) << std::endl;
+                    std::cout << cipher::dcrypt(cipher::encrypt("123321", 5), 5) << std::endl;
                     break;
                 case 3:
                     std::cout << "You chose 'add password'" << std::endl;
@@ -83,7 +83,7 @@ auto main() -> int{
                     quit = true;
                     break;
                 default:
-                    std::cout<<"Operation not recognized, try again.";
+                    std::cout<<"Operation not recognized, try again." << std::endl;
                     break;
             }
         }

@@ -6,9 +6,13 @@
 
 namespace login {
     auto loginIn() -> bool {
-        std::ifstream file;
-        file.open("files/test.txt");
+        std::fstream file = std::fstream("..\\files\\login.txt");
+        std::string pass;
+        //file.open("..\\files\\login.txt");
         //if (file.is_open()) {
+
+        std::getline(file, pass);
+        std::cout << pass << std::endl;
 
             std::string userPassword;
             int kay;
@@ -20,11 +24,9 @@ namespace login {
             std::cin >> kay;
 
             std::string globalPass;
-            //file >> globalPass;
-            //cipher::dcrypt(globalPass, kay);
 
-
-            globalPass = "123";
+            globalPass = cipher::dcrypt(pass, kay);
+            //globalPass = "123";
 
             if (userPassword == globalPass) {
                 std::cout << "Correct password \n" << std::endl;
@@ -41,8 +43,8 @@ namespace login {
     }
     auto saveTime(time_t time) -> void {
 
-        std::ofstream loginsOut;
-        loginsOut.open("files/test.txt", std::ofstream::out | std::ofstream::trunc);
+        std::fstream loginsOut;
+        loginsOut.open("..\\files\\test.txt", std::ofstream::out | std::ofstream::trunc);
 
         if (loginsOut.is_open()) {
 
