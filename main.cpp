@@ -52,9 +52,9 @@ auto main() -> int{
             std::cout << "5: remove password \n" << std::endl;
             std::cout << "Enter operation: \n";
 
-            std::cout <<"wyniki szyfrowania" << std::endl;
+            /*std::cout <<"wyniki szyfrowania" << std::endl;
             std::cout << cipher::dcrypt(cipher::encrypt("123321", 5), 5) << std::endl;
-            std::cout << cipher::encrypt("123321", 5) << std::endl;
+            std::cout << cipher::encrypt("123321", 5) << std::endl;*/
 
             std::cin >> choiceOption;
 
@@ -69,6 +69,7 @@ auto main() -> int{
                     break;
                 case 3:
                     std::cout << "You chose 'add password'" << std::endl;
+                    operations::addPassword(filePath);
                     break;
                 case 4:
                     std::cout << "You chose 'edit password'" << std::endl;

@@ -5,4 +5,5 @@ namespace operations {
     auto help() -> void;
     auto openFile() -> std::string;
     auto quit() -> void;
+    auto addPassword(std::string filePath) -> void;
 }
