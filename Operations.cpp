@@ -3,6 +3,15 @@
 #include "Operations.hpp"
 
 namespace operations {
+    struct Password {
+        std::string category;
+        std::string password;
+        std::string username;
+        std::string email;
+        std::string website;
+        std::string notes;
+    };
+
     auto help() -> void {
         std::cout << "Available operations: " << std::endl;;
         std::cout << "1: search password" << std::endl;
@@ -280,19 +289,124 @@ namespace operations {
      */
 
     auto editPassword(std::string filePath) -> void {
+        std::fstream file;
+        file.open(filePath);
+        int numberLine = 0;
 
+        while (!file.eof()) {
+            std::string line;
+            std::getline(file, line);
+            std::cout << numberLine << ". " << line << std::endl;
+            numberLine++;
+        }
+        std::cout << std::endl;
+
+        std::cout << "Enter number of line with password to edit: ";
+        int lineNumberToDelete;
+        std::cin >> lineNumberToDelete;
+        if (lineNumberToDelete < 5 || lineNumberToDelete > numberLine) {
+            std::cout << "Invalid number\n" << std::endl;
+            editPassword(filePath);
+        }
     }
 
     auto removePassword(std::string filePath) -> void {
+        std::string line;
+        std::fstream file;
+        int numberLine = 0;
+        std::string password;
 
+        file.open(filePath);
+
+        std::fstream temp;
+        temp.open("..\\files\\temp.txt");
+
+
+        while (!file.eof()) {
+            std::string line;
+            std::getline(file, line);
+            std::cout << numberLine << ". " << line << std::endl;
+            numberLine++;
+        }
+        std::cout << std::endl;
+
+        std::cout << "Enter password line to remove: ";
+        std::cin >> password;
+        password += ".";
+
+
+            while (getline(file, line)) {
+                if (line != password) {
+                    temp << line << std::endl;
+            }
+
+            temp.close();
+            file.close();
+
+            const char * p = filePath.c_str();
+            remove(p);
+            rename("..\\files\\temp.txt", p);
+        }
     }
 
     auto searchPassword(std::string filePath) -> void {
+        std::string line;
+        std::fstream file;
+        int numberLine = 0;
+        std::string password;
 
+        file.open(filePath);
+
+        std::fstream temp;
+        temp.open("..\\files\\temp.txt");
     }
 
     auto sortPasswords(std::string filePath) -> void {
+        std::fstream file;
+        file.open(filePath);
 
+        std::string category;
+        std::string login;
+        std::string email;
+        std::string website;
+
+        std::cout << "Enter sort type: " << std::endl;
+        std::cout << "1. Sort by category" << std::endl;
+        std::cout << "2. Sort by login" << std::endl;
+        std::cout << "3. Sort by email" << std::endl;
+        std::cout << "4. Sort by website" << std::endl;
+
+        int sortType;
+        std::cin >> sortType;
+
+        switch (sortType) {
+            case 1:
+                std::cout << "Sorting by category..." << std::endl;
+                std::cout << "Enter category: " << std::endl;
+                std::cin >> category;
+                while (category.length() < 1) {
+                    std::cout << "Category is too short, try again" << std::endl;
+                    std::cin >> category;
+                }
+                while (!file.eof()) {
+                    std::string line;
+                    std::getline(file, line);
+                    std::cout << line << std::endl;
+                    if (line.find(category) != std::string::npos) {
+                        std::cout << line << std::endl;
+                    }
+                }
+                break;
+            case 2:
+                std::cout << "Sorting by login..." << std::endl;
+                break;
+            case 3:
+                std::cout << "Sorting by email..." << std::endl;
+                break;
+            case 4:
+                std::cout << "Sorting by website..." << std::endl;
+                break;
+        }
     }
 
     auto addCategory(std::string filePath) -> void {
