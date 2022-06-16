@@ -2,6 +2,6 @@
 #include <iostream>
 
 namespace login {
-    auto loginIn() -> bool;
+    auto loginIn(std::string filePath) -> bool;
     auto saveTime(time_t time) -> void;
 }

@@ -5,10 +5,13 @@
 #include "Cipher.hpp"
 
 namespace login {
-    auto loginIn() -> bool {
-        std::fstream file = std::fstream("..\\files\\loginPass.txt");
+    auto loginIn(std::string filePath) -> bool {
+        std::fstream file = std::fstream(filePath);
         std::string pass;
-        file.open("..\\files\\loginPass.txt");
+        file.open(filePath);
+        file.clear();
+        file.seekg(0, std::ios::beg);
+
         if (file.is_open()) {
 
         std::getline(file, pass);

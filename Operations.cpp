@@ -20,41 +20,51 @@ namespace operations {
      * @param time
      */
 
-    auto openFile(std::string &filePath) -> void {
+    auto openFile() -> std::string {
 
-        std::cout << "Choose option:\n"
-                     "1 - choose file\n"
-                     "2 - write path to file" << std::endl;
+        std::string filePath;
+
+        std::cout << "Choose option:\n" << std::endl <<
+                     "1 - choose file path from program\n"
+                     "2 - write absolute path to your file\n" << std::endl;
 
         int choice;
+        std::cout << "Enter number:";
         std::cin >> choice;
+        std::cout << std::endl;
 
         switch (choice) {
             case 1:
+                std::cout << "1 - \"..\\\\files\\\\login.txt\"" << std::endl;
+                std::cout << "2 - \"..\\\\files\\\\file2.txt\"\n" << std::endl;
                 int choiceFileNumber;
-                std::cout << "Enter file number: ";
+                std::cout << "Enter file number:";
                 std::cin >> choiceFileNumber;
+                std::cout << std::endl;
                 switch (choiceFileNumber) {
                     case 1:
-                        filePath = "./files/file1.txt";
+                        filePath = "..\\files\\login.txt";
                         break;
                     case 2:
-                        filePath = "./files/file2.txt";
+                        filePath = "..\\files\\file2.txt";
                         break;
                     default:
-                        std::cout << "I" << std::endl;
+                        std::cout << "You choose wrong number" << std::endl;
+                        openFile();
                         break;
                 }
                 break;
             case 2:
-                std::cout << "Enter file path: ";
+                std::cout << "Enter your absolute file path \n"
+                             "(i.e. G:\\szkola\\PJC\\PasswordManagerCPP\\files\\login.txt): ";
                 std::cin >> filePath;
                 break;
             default:
-                std::cout << "Invalid option" << std::endl;
+                std::cout << "Invalid file path" << std::endl;
+                openFile();
                 break;
         }
-
+        return filePath;
     }
 
     auto quit() -> void {

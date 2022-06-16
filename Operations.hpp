@@ -3,6 +3,6 @@
 
 namespace operations {
     auto help() -> void;
-    auto openFile(std::string &filePath) -> void;
+    auto openFile() -> std::string;
     auto quit() -> void;
 }

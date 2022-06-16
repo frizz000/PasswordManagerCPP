@@ -21,8 +21,11 @@ auto main() -> int{
 
     while(!isLogIn){
         std::cout << "Welcome to the Password Manager!" << std::endl;
+
+        fileName = operations::openFile();
+
         std::cout << "LOG IN" << std::endl;
-        isLogIn = login::loginIn();
+        isLogIn = login::loginIn(fileName);
         logAttempts++;
         if(logAttempts > 3){
             std::cout << "You have exceeded the number of attempts" << std::endl;
