@@ -15,7 +15,7 @@ namespace operations {
         std::cout << "8: help menu" << std::endl;
         std::cout << "9: quit program" << std::endl;
 
-        std::cout << "This program is made by: Piotr Jalocha" << std::endl;
+        std::cout << "This program is made by: Piotr Jalocha\n" << std::endl;
     }
 
     /**
@@ -72,7 +72,7 @@ namespace operations {
 
     auto quit() -> void {
         std::cout << "Goodbye!\n"
-                     "ps. Mr. Kwiatkowski is cool teacher" << std::endl;
+                     "ps. Mr. Kwiatkowski is a cool teacher" << std::endl;
         exit(0);
     }
 
@@ -181,7 +181,7 @@ namespace operations {
                 std::cout << "Enter new email: ";
                 std::cin >> email;
                 while (email.find('@') == std::string::npos) {
-                    std::cout << "Email is incorrect" << std::endl;
+                    std::cout << "Email is incorrect, add '@'" << std::endl;
                     std::cout << "Enter new email: ";
                     std::cin >> email;
                 }
@@ -229,7 +229,7 @@ namespace operations {
                         std::cout << "Enter email: ";
                         std::cin >> email;
                         while (email.find('@') == std::string::npos) {
-                            std::cout << "Email is incorrect" << std::endl;
+                            std::cout << "Email is incorrect, add '@'" << std::endl;
                             std::cout << "Enter new email: ";
                             std::cin >> email;
                         }
@@ -261,13 +261,45 @@ namespace operations {
         }
     }
 
+    /**
+     * @brief Function adds new password to file by user input or random password grenated by program
+     * @param filePath Path to file
+     */
+
     auto fileStruct(std::string filePath) -> void {
         std::fstream file;
         file.open(filePath);
         std::string line;
-        while (std::getline(file, line)) {
-            std::cout << line << std::endl;
-        }
-        file.close();
+        file << "Password | Category | Login | E-mail | Site | Note" << std::endl;
+    }
+
+    /**
+     * @brief Function creates new file with header
+     * @param filePath Path to file
+     *
+     */
+
+    auto editPassword(std::string filePath) -> void {
+
+    }
+
+    auto removePassword(std::string filePath) -> void {
+
+    }
+
+    auto searchPassword(std::string filePath) -> void {
+
+    }
+
+    auto sortPasswords(std::string filePath) -> void {
+
+    }
+
+    auto addCategory(std::string filePath) -> void {
+
+    }
+    auto removeCategory(std::string filePath) -> void {
+
     }
 }
+

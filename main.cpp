@@ -40,7 +40,7 @@ auto main() -> int{
     if(isLogIn) {
 
         time_t timeNow = time(0);
-        login::saveTime(timeNow, filePath);
+        //login::saveTime(timeNow, filePath);
 
         while(!quit)
         {
@@ -63,9 +63,11 @@ auto main() -> int{
             {
                 case 1:
                     std::cout << "You chose 'search password'" << std::endl;
+                    operations::searchPassword(filePath);
                     break;
                 case 2:
                     std::cout << "You chose 'sort passwords'" << std::endl;
+                    operations::sortPasswords(filePath);
                     break;
                 case 3:
                     std::cout << "You chose 'add password'" << std::endl;
@@ -73,15 +75,19 @@ auto main() -> int{
                     break;
                 case 4:
                     std::cout << "You chose 'edit password'" << std::endl;
+                    operations::editPassword(filePath);
                     break;
                 case 5:
                     std::cout << "You chose 'remove password'" << std::endl;
+                    operations::removePassword(filePath);
                     break;
                 case 6:
                     std::cout << "You chose 'add category'" << std::endl;
+                    operations::addCategory(filePath);
                     break;
                 case 7:
                     std::cout << "You chose 'remove category'" << std::endl;
+                    operations::removeCategory(filePath);
                     break;
                 case 8:
                     std::cout << "You chose 'help menu'" << std::endl;
