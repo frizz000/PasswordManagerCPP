@@ -15,17 +15,20 @@ auto main() -> int{
     bool isLogIn = false;
     bool quit = false;
     int choiceOption;
-    std::string fileName;
+    std::string filePath;
     int logAttempts = 0;
 
 
     while(!isLogIn){
-        std::cout << "Welcome to the Password Manager!" << std::endl;
+        std::cout << " ___                                                     \n"
+                     " /__)  _   _   _         _  _/   /|/|  _     _   _  _  _ \n"
+                     "/     (/ _)  _)  ((/ () /  (/   /   | (/ /) (/  (/ (- /  \n"
+                     "                                               _/        " << std::endl;
 
-        fileName = operations::openFile();
+        filePath = operations::openFile();
 
         std::cout << "LOG IN" << std::endl;
-        isLogIn = login::loginIn(fileName);
+        isLogIn = login::loginIn(filePath);
         logAttempts++;
         if(logAttempts > 3){
             std::cout << "You have exceeded the number of attempts" << std::endl;
@@ -37,7 +40,7 @@ auto main() -> int{
     if(isLogIn) {
 
         time_t timeNow = time(0);
-        login::saveTime(timeNow);
+        login::saveTime(timeNow, filePath);
 
         while(!quit)
         {
@@ -47,7 +50,11 @@ auto main() -> int{
             std::cout << "3: add password       8: help menu" << std::endl;
             std::cout << "4: edit password      9: quit program" << std::endl;
             std::cout << "5: remove password \n" << std::endl;
-            std::cout << "Enter operation: ";
+            std::cout << "Enter operation: \n";
+
+            std::cout <<"wyniki szyfrowania" << std::endl;
+            std::cout << cipher::dcrypt(cipher::encrypt("123321", 5), 5) << std::endl;
+            std::cout << cipher::encrypt("123321", 5) << std::endl;
 
             std::cin >> choiceOption;
 
@@ -56,11 +63,9 @@ auto main() -> int{
             {
                 case 1:
                     std::cout << "You chose 'search password'" << std::endl;
-                    std::cout << cipher::encrypt("123321", 5) << std::endl;
                     break;
                 case 2:
                     std::cout << "You chose 'sort passwords'" << std::endl;
-                    std::cout << cipher::dcrypt(cipher::encrypt("123321", 5), 5) << std::endl;
                     break;
                 case 3:
                     std::cout << "You chose 'add password'" << std::endl;

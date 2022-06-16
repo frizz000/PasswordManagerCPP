@@ -15,7 +15,7 @@ namespace login {
         if (file.is_open()) {
 
         std::getline(file, pass);
-        std::cout << "encrypt message: " << pass << std::endl;
+        //std::cout << "encrypt message: " << pass << std::endl;
 
 
             std::string userPassword;
@@ -30,6 +30,7 @@ namespace login {
             std::string globalPass;
 
             globalPass = cipher::dcrypt(pass, kay);
+
             //globalPass = "123";
 
             if (userPassword == globalPass) {
@@ -42,7 +43,7 @@ namespace login {
             }
 
         } else
-            std::cout << "Access to file denied" << std::endl;
+            std::cout << "Access to file denied or your file path is wrong" << std::endl;
         return false;
     }
 
@@ -52,15 +53,15 @@ namespace login {
      * @return true if the password is correct, false if not
      */
 
-    auto saveTime(time_t time) -> void {
+    auto saveTime(time_t time, std::string filePath) -> void {
 
         std::fstream loginsOut;
-        loginsOut.open("..\\files\\logins_timeline.txt", std::ofstream::out | std::ofstream::app);
+        loginsOut.open(filePath, std::ofstream::out | std::ofstream::app);
 
         if (loginsOut.is_open()) {
 
             char *dt = std::ctime(&time);
-            loginsOut << dt << "Login out" << std::endl;
+            loginsOut << dt << std::endl;
 
         } else
             std::cout << "logins_timeline.txt not found" << std::endl;

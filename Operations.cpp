@@ -68,7 +68,12 @@ namespace operations {
     }
 
     auto quit() -> void {
-        std::cout << "Goodbye!" << std::endl;
+        std::cout << "Goodbye!\n"
+                     "ps. Mr. Kwiatkowski is cool teacher" << std::endl;
         exit(0);
     }
+
+    /**
+     * @brief quit program
+     */
 }
