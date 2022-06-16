@@ -81,6 +81,7 @@ auto main() -> int{
                 case 9:
                     std::cout << "You chose 'quit program'" << std::endl;
                     quit = true;
+                    operations::quit();
                     break;
                 default:
                     std::cout<<"Operation not recognized, try again." << std::endl;
