@@ -28,8 +28,8 @@ namespace operations {
         std::string filePath;
 
         std::cout << "Choose option:\n" << std::endl <<
-                     "1 - choose file path from program\n"
-                     "2 - write absolute path to your file\n" << std::endl;
+                  "1 - choose file path from program\n"
+                  "2 - write absolute path to your file\n" << std::endl;
 
         int choice;
         std::cout << "Enter number:";
@@ -81,12 +81,16 @@ namespace operations {
      */
 
     auto addPassword(std::string filePath) -> void {
+        srand(time(NULL));
+
         std::string password;
         std::string category;
         std::string login;
         std::string email;
         std::string website;
         std::string note;
+        int passwordLength;
+        std::ofstream file;
 
         std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
         std::string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -94,9 +98,9 @@ namespace operations {
         std::string number = "0123456789";
 
         std::cout << "Choose option:\n" << std::endl <<
-                     "1 - add password by self\n"
-                     "2 - add password by generator\n"
-                     "3 - go to menu\n"<< std::endl;
+                  "1 - add password by self\n"
+                  "2 - add password by generator\n"
+                  "3 - go to menu\n" << std::endl;
         int choice;
         std::cout << "Enter number:";
         std::cin >> choice;
@@ -105,47 +109,97 @@ namespace operations {
             case 1:
                 std::cout << "Enter new password: ";
                 std::cin >> password;
-                if (password.size() < 8 || password.size() > 24 || password.empty()) {
-                    std::cout << "Password is to short or to long" << std::endl;
-                    addPassword(filePath);
-                } else if (password.find_first_not_of("0123456789") != std::string::npos) {
-                    std::cout << "Password must have numbers" << std::endl;
-                    addPassword(filePath);
-                } else if (password.find_first_not_of("abcdefghijklmnopqrstuvwxyz") != std::string::npos){
-                    std::cout << "Password must have small letters" << std::endl;
-                    addPassword(filePath);
-                } else if (password.find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") != std::string::npos){
-                    std::cout << "Password must have big letters" << std::endl;
-                    addPassword(filePath);
-                } else if (password.find_first_not_of("!@#$%^&*()_+-=[]{}|;':,./<>?`~") != std::string::npos){
-                    std::cout << "Password must have special characters" << std::endl;
-                    addPassword(filePath);
-                } else {
-                    std::cout << "Password is correct\n" << std::endl;
+                while (password.length() < 8 || password.length() > 16) {
+                    std::cout << "Password is too short or is too long. Enter new password: ";
+                    std::cin >> password;
+                }
+                while (password.find('0') == std::string::npos && password.find('1') == std::string::npos &&
+                       password.find('2') == std::string::npos && password.find('3') == std::string::npos &&
+                       password.find('4') == std::string::npos && password.find('5') == std::string::npos &&
+                       password.find('6') == std::string::npos && password.find('7') == std::string::npos &&
+                       password.find('8') == std::string::npos && password.find('9') == std::string::npos) {
+                    std::cout << "Password must contain at least one number. Enter new password: ";
+                    std::cin >> password;
+                }
+                while (password.find('a') == std::string::npos && password.find('b') == std::string::npos &&
+                       password.find('c') == std::string::npos && password.find('d') == std::string::npos &&
+                       password.find('e') == std::string::npos && password.find('f') == std::string::npos &&
+                       password.find('g') == std::string::npos && password.find('h') == std::string::npos &&
+                       password.find('i') == std::string::npos && password.find('j') == std::string::npos &&
+                       password.find('k') == std::string::npos && password.find('l') == std::string::npos &&
+                       password.find('m') == std::string::npos && password.find('n') == std::string::npos &&
+                       password.find('o') == std::string::npos && password.find('p') == std::string::npos &&
+                       password.find('q') == std::string::npos && password.find('r') == std::string::npos &&
+                       password.find('s') == std::string::npos && password.find('t') == std::string::npos &&
+                       password.find('u') == std::string::npos && password.find('v') == std::string::npos &&
+                       password.find('w') == std::string::npos && password.find('x') == std::string::npos &&
+                       password.find('y') == std::string::npos && password.find('z') == std::string::npos) {
+                    std::cout << "Password must contain at least one lowercase letter. Enter new password: ";
+                    std::cin >> password;
+                }
+                while (password.find('A') == std::string::npos && password.find('B') == std::string::npos &&
+                       password.find('C') == std::string::npos && password.find('D') == std::string::npos &&
+                       password.find('E') == std::string::npos && password.find('F') == std::string::npos &&
+                       password.find('G') == std::string::npos && password.find('H') == std::string::npos &&
+                       password.find('I') == std::string::npos && password.find('J') == std::string::npos &&
+                       password.find('K') == std::string::npos && password.find('L') == std::string::npos &&
+                       password.find('M') == std::string::npos && password.find('N') == std::string::npos &&
+                       password.find('O') == std::string::npos && password.find('P') == std::string::npos &&
+                       password.find('Q') == std::string::npos && password.find('R') == std::string::npos &&
+                       password.find('S') == std::string::npos && password.find('T') == std::string::npos &&
+                       password.find('U') == std::string::npos && password.find('V') == std::string::npos &&
+                       password.find('W') == std::string::npos && password.find('X') == std::string::npos &&
+                       password.find('Y') == std::string::npos && password.find('Z') == std::string::npos) {
+                    std::cout << "Password must contain at least one uppercase letter. Enter new password: ";
+                    std::cin >> password;
+                }
+                while (password.find('!') == std::string::npos && password.find('@') == std::string::npos &&
+                       password.find('#') == std::string::npos && password.find('$') == std::string::npos &&
+                       password.find('%') == std::string::npos && password.find('^') == std::string::npos &&
+                       password.find('&') == std::string::npos && password.find('*') == std::string::npos &&
+                       password.find('(') == std::string::npos && password.find(')') == std::string::npos &&
+                       password.find('-') == std::string::npos && password.find('_') == std::string::npos &&
+                       password.find('=') == std::string::npos && password.find('+') == std::string::npos &&
+                       password.find('[') == std::string::npos && password.find(']') == std::string::npos &&
+                       password.find('{') == std::string::npos && password.find('}') == std::string::npos &&
+                       password.find(';') == std::string::npos && password.find('\'') == std::string::npos &&
+                       password.find('\"') == std::string::npos && password.find('|') == std::string::npos &&
+                       password.find('\\') == std::string::npos && password.find('/') == std::string::npos &&
+                       password.find(',') == std::string::npos && password.find('.') == std::string::npos &&
+                       password.find('<') == std::string::npos && password.find('>') == std::string::npos &&
+                       password.find('?') == std::string::npos && password.find('~') == std::string::npos &&
+                       password.find('`') == std::string::npos) {
+                    std::cout << "Password must contain at least one special symbol. Enter new password: ";
+                    std::cin >> password;
+                }
+                std::cout << "Password is correct\n" << std::endl;
 
-                    std::cout << "Enter new category: ";
-                    std::cin >> category;
-                    std::cout << "Enter new login: ";
-                    std::cin >> login;
+                std::cout << "Enter new category: ";
+                std::cin >> category;
+                std::cout << "Enter new login: ";
+                std::cin >> login;
+                std::cout << "Enter new email: ";
+                std::cin >> email;
+                while (email.find('@') == std::string::npos) {
+                    std::cout << "Email is incorrect" << std::endl;
                     std::cout << "Enter new email: ";
                     std::cin >> email;
-                    std::cout << "Enter new website: ";
-                    std::cin >> website;
-                    std::cout << "Enter new note: ";
-                    std::cin >> note;
-                    std::ofstream file;
-                    file.open(filePath, std::ios::app);
-                    file << password << " " << category << " " << login << " " << email << " " << website << " " << note << std::endl;
-                    file.close();
                 }
+                std::cout << "Enter new website: ";
+                std::cin >> website;
+                std::cout << "Enter new note: ";
+                std::cin >> note;
+                file.open(filePath, std::ios::app);
+                file << password << " | " << category << " | " << login << " | " << email << " | " << website << " | "
+                     << note;
+                file.close();
             case 2:
-                int passwordLength;
                 std::cout << "Enter password length (8-24): ";
                 std::cin >> passwordLength;
                 if (passwordLength < 8 || passwordLength > 24) {
                     std::cout << "Invalid password length" << std::endl;
                     addPassword(filePath);
-                } else{
+                } else {
                     for (int i = 0; i < passwordLength; i++) {
                         int random = rand() % 4;
                         switch (random) {
@@ -174,6 +228,11 @@ namespace operations {
                         std::cin >> login;
                         std::cout << "Enter email: ";
                         std::cin >> email;
+                        while (email.find('@') == std::string::npos) {
+                            std::cout << "Email is incorrect" << std::endl;
+                            std::cout << "Enter new email: ";
+                            std::cin >> email;
+                        }
                         std::cout << "Enter website: ";
                         std::cin >> website;
                         std::cout << "Enter note: ";
@@ -181,7 +240,8 @@ namespace operations {
                         std::cout << "Saving..." << std::endl;
                         std::ofstream file;
                         file.open(filePath, std::ios::app);
-                        file << password << " " << category << " " << login << " " << email << " " << website << " " << note << std::endl;
+                        file << password << " | " << category << " | " << login << " | " << email << " | " << website
+                             << " | " << note;
                         file.close();
                         std::cout << "Saved!" << std::endl;
                     } else if (saveChoice == 'n') {
@@ -198,6 +258,16 @@ namespace operations {
             default:
                 std::cout << "Invalid choice\n" << std::endl;
                 addPassword(filePath);
-            }
         }
     }
+
+    auto fileStruct(std::string filePath) -> void {
+        std::fstream file;
+        file.open(filePath);
+        std::string line;
+        while (std::getline(file, line)) {
+            std::cout << line << std::endl;
+        }
+        file.close();
+    }
+}

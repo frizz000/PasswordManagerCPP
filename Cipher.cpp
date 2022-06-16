@@ -35,6 +35,4 @@ namespace cipher{
      * @param message
      * @param key
      */
-
-
 }

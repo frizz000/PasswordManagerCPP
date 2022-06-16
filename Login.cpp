@@ -56,15 +56,16 @@ namespace login {
     auto saveTime(time_t time, std::string filePath) -> void {
 
         std::fstream loginsOut;
-        loginsOut.open(filePath, std::ofstream::out | std::ofstream::app);
+        loginsOut.open(filePath, std::ios::out | std::ios::app);
+
 
         if (loginsOut.is_open()) {
 
             char *dt = std::ctime(&time);
-            loginsOut << dt << std::endl;
+               loginsOut << dt << std::endl;
 
         } else
-            std::cout << "logins_timeline.txt not found" << std::endl;
+            std::cout << "Saving time went wrong :(" << std::endl;
 
         loginsOut.close();
     }
