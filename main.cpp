@@ -54,7 +54,7 @@ auto main() -> int{
 
 
 
-            {
+            /*{
                 std::cout << "wyniki szyfrowania" << std::endl;
                 std::cout << cipher::dcrypt(cipher::encrypt("lol123\n"
                                                             "\n"
@@ -73,7 +73,7 @@ auto main() -> int{
                 while (std::getline(file, currentLine)) {
                     std::cout << cipher::dcrypt(currentLine, 2) << std::endl;
                 }
-            }
+            }*/
 
 
 

@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <chrono>
+#include <thread>
 #include "Operations.hpp"
 
 namespace operations {
@@ -437,15 +439,35 @@ namespace operations {
      */
 
     auto searchPassword(std::string filePath) -> void {
-        std::string line;
         std::fstream file;
-        int numberLine = 0;
-        std::string password;
+        std::string word;
+        int numberLine= 0;
+        int counter = 0;
 
-        file.open(filePath);
+        file.open(filePath.c_str());
 
-        std::fstream temp;
-        temp.open("..\\files\\temp.txt");
+        std::cout << "Enter word to equals: ";
+        std::cin >> word;
+        std::cout << std::endl;
+
+        std::cout << "Searching..." << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::cout << "Found passwords:" << std::endl;
+
+        while (!file.eof()) {
+            std::string line;
+            std::getline(file, line);
+            if (line.find(word) != std::string::npos) {
+                std::cout << numberLine << ". " << line << std::endl;
+                counter++;
+            }
+            numberLine++;
+        }
+        if (counter == 0) {
+            std::cout << "No passwords found" << std::endl;
+        }
+
+        std::cout << std::endl;
     }
 
     /**
