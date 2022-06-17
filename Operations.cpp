@@ -3,14 +3,6 @@
 #include "Operations.hpp"
 
 namespace operations {
-    struct Password {
-        std::string category;
-        std::string password;
-        std::string username;
-        std::string email;
-        std::string website;
-        std::string notes;
-    };
 
     auto help() -> void {
         std::cout << "Available operations: " << std::endl;;
@@ -48,7 +40,7 @@ namespace operations {
         switch (choice) {
             case 1:
                 std::cout << "1 - \"..\\\\files\\\\login.txt\"" << std::endl;
-                std::cout << "2 - \"..\\\\files\\\\file2.txt\"\n" << std::endl;
+                std::cout << "2 - \"..\\\\files\\\\login2.txt\"\n" << std::endl;
                 int choiceFileNumber;
                 std::cout << "Enter file number:";
                 std::cin >> choiceFileNumber;
@@ -58,7 +50,7 @@ namespace operations {
                         filePath = "..\\files\\login.txt";
                         break;
                     case 2:
-                        filePath = "..\\files\\file2.txt";
+                        filePath = "..\\files\\login2.txt";
                         break;
                     default:
                         std::cout << "You choose wrong number" << std::endl;
@@ -103,7 +95,7 @@ namespace operations {
 
         std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
         std::string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        std::string s_symbol = "!@#$%&";
+        std::string symbol = "!@#$%&";
         std::string number = "0123456789";
 
         std::cout << "Choose option:\n" << std::endl <<
@@ -219,7 +211,7 @@ namespace operations {
                                 password += ALPHABET[rand() % ALPHABET.length()];
                                 break;
                             case 2:
-                                password += s_symbol[rand() % s_symbol.length()];
+                                password += symbol[rand() % symbol.length()];
                                 break;
                             case 3:
                                 password += number[rand() % number.length()];
@@ -289,9 +281,15 @@ namespace operations {
      */
 
     auto editPassword(std::string filePath) -> void {
-        std::fstream file;
+        std::ifstream file;
         file.open(filePath);
         int numberLine = 0;
+        std::string lineSearch;
+
+        std::ofstream temp ("..\\files\\temp.txt");
+
+        std::string passwordToEdit;
+        std::string newPassword;
 
         while (!file.eof()) {
             std::string line;
@@ -301,25 +299,107 @@ namespace operations {
         }
         std::cout << std::endl;
 
-        std::cout << "Enter number of line with password to edit: ";
-        int lineNumberToDelete;
-        std::cin >> lineNumberToDelete;
-        if (lineNumberToDelete < 5 || lineNumberToDelete > numberLine) {
-            std::cout << "Invalid number\n" << std::endl;
-            editPassword(filePath);
+        std::cout << "Enter password to edit: ";
+        std::cin >> passwordToEdit;
+        std::cout << "Enter new password: ";
+        std::cin >> newPassword;
+        std::cout << "Enter new password: ";
+        std::cin >> newPassword;
+        while (newPassword.length() < 8 || newPassword.length() > 16) {
+            std::cout << "Password is too short or is too long. Enter new password: ";
+            std::cin >> newPassword;
         }
+        while (newPassword.find('0') == std::string::npos && newPassword.find('1') == std::string::npos &&
+               newPassword.find('2') == std::string::npos && newPassword.find('3') == std::string::npos &&
+               newPassword.find('4') == std::string::npos && newPassword.find('5') == std::string::npos &&
+               newPassword.find('6') == std::string::npos && newPassword.find('7') == std::string::npos &&
+               newPassword.find('8') == std::string::npos && newPassword.find('9') == std::string::npos) {
+            std::cout << "Password must contain at least one number. Enter new password: ";
+            std::cin >> newPassword;
+        }
+        while (newPassword.find('a') == std::string::npos && newPassword.find('b') == std::string::npos &&
+               newPassword.find('c') == std::string::npos && newPassword.find('d') == std::string::npos &&
+               newPassword.find('e') == std::string::npos && newPassword.find('f') == std::string::npos &&
+               newPassword.find('g') == std::string::npos && newPassword.find('h') == std::string::npos &&
+               newPassword.find('i') == std::string::npos && newPassword.find('j') == std::string::npos &&
+               newPassword.find('k') == std::string::npos && newPassword.find('l') == std::string::npos &&
+               newPassword.find('m') == std::string::npos && newPassword.find('n') == std::string::npos &&
+               newPassword.find('o') == std::string::npos && newPassword.find('p') == std::string::npos &&
+               newPassword.find('q') == std::string::npos && newPassword.find('r') == std::string::npos &&
+               newPassword.find('s') == std::string::npos && newPassword.find('t') == std::string::npos &&
+               newPassword.find('u') == std::string::npos && newPassword.find('v') == std::string::npos &&
+               newPassword.find('w') == std::string::npos && newPassword.find('x') == std::string::npos &&
+               newPassword.find('y') == std::string::npos && newPassword.find('z') == std::string::npos) {
+            std::cout << "Password must contain at least one lowercase letter. Enter new password: ";
+            std::cin >> newPassword;
+        }
+        while (newPassword.find('A') == std::string::npos && newPassword.find('B') == std::string::npos &&
+               newPassword.find('C') == std::string::npos && newPassword.find('D') == std::string::npos &&
+               newPassword.find('E') == std::string::npos && newPassword.find('F') == std::string::npos &&
+               newPassword.find('G') == std::string::npos && newPassword.find('H') == std::string::npos &&
+               newPassword.find('I') == std::string::npos && newPassword.find('J') == std::string::npos &&
+               newPassword.find('K') == std::string::npos && newPassword.find('L') == std::string::npos &&
+               newPassword.find('M') == std::string::npos && newPassword.find('N') == std::string::npos &&
+               newPassword.find('O') == std::string::npos && newPassword.find('P') == std::string::npos &&
+               newPassword.find('Q') == std::string::npos && newPassword.find('R') == std::string::npos &&
+               newPassword.find('S') == std::string::npos && newPassword.find('T') == std::string::npos &&
+               newPassword.find('U') == std::string::npos && newPassword.find('V') == std::string::npos &&
+               newPassword.find('W') == std::string::npos && newPassword.find('X') == std::string::npos &&
+               newPassword.find('Y') == std::string::npos && newPassword.find('Z') == std::string::npos) {
+            std::cout << "Password must contain at least one uppercase letter. Enter new password: ";
+            std::cin >> newPassword;
+        }
+        while (newPassword.find('!') == std::string::npos && newPassword.find('@') == std::string::npos &&
+               newPassword.find('#') == std::string::npos && newPassword.find('$') == std::string::npos &&
+               newPassword.find('%') == std::string::npos && newPassword.find('^') == std::string::npos &&
+               newPassword.find('&') == std::string::npos && newPassword.find('*') == std::string::npos &&
+               newPassword.find('(') == std::string::npos && newPassword.find(')') == std::string::npos &&
+               newPassword.find('-') == std::string::npos && newPassword.find('_') == std::string::npos &&
+               newPassword.find('=') == std::string::npos && newPassword.find('+') == std::string::npos &&
+               newPassword.find('[') == std::string::npos && newPassword.find(']') == std::string::npos &&
+               newPassword.find('{') == std::string::npos && newPassword.find('}') == std::string::npos &&
+               newPassword.find(';') == std::string::npos && newPassword.find('\'') == std::string::npos &&
+               newPassword.find('\"') == std::string::npos && newPassword.find('|') == std::string::npos &&
+               newPassword.find('\\') == std::string::npos && newPassword.find('/') == std::string::npos &&
+               newPassword.find(',') == std::string::npos && newPassword.find('.') == std::string::npos &&
+               newPassword.find('<') == std::string::npos && newPassword.find('>') == std::string::npos &&
+               newPassword.find('?') == std::string::npos && newPassword.find('~') == std::string::npos &&
+               newPassword.find('`') == std::string::npos) {
+            std::cout << "Password must contain at least one special symbol. Enter new password: ";
+            std::cin >> newPassword;
+        }
+        std::cout << "Password is correct\n" << std::endl;
+
+        while (file >> lineSearch){
+            if (lineSearch == passwordToEdit){
+                lineSearch = newPassword;
+            }
+            lineSearch += " ";
+            temp << lineSearch;
+        }
+        file.close();
+        temp.close();
+        remove(filePath.c_str());
+        rename("temp2.txt", filePath.c_str());
+
+        std::cout << "Password changed successfully" << std::endl;
     }
+    /**
+     * @brief Function edits password by user input
+     * @param filePath Path to file
+     */
 
     auto removePassword(std::string filePath) -> void {
-        std::string line;
         std::fstream file;
-        int numberLine = 0;
-        std::string password;
+        std::string line;
+        int numberLine= 0;
+        int passwordLine;
+        int lineNumberToDelete = 1;
 
         file.open(filePath);
 
         std::fstream temp;
-        temp.open("..\\files\\temp.txt");
+        temp.open("..\\files\\temp.txt", std::fstream::out);
 
 
         while (!file.eof()) {
@@ -330,24 +410,31 @@ namespace operations {
         }
         std::cout << std::endl;
 
-        std::cout << "Enter password line to remove: ";
-        std::cin >> password;
-        password += ".";
+        std::cout << "Enter passwordLine line to remove: ";
+        std::cin >> passwordLine;
 
-
-            while (getline(file, line)) {
-                if (line != password) {
+        if (passwordLine < 5 || passwordLine > numberLine) {
+            std::cout << "Invalid number\n" << std::endl;
+            removePassword(filePath);
+        } else {
+            std::cout << "Removing..." << std::endl;
+            while (std::getline(file, line)) {
+                if (lineNumberToDelete != passwordLine) {
                     temp << line << std::endl;
+                }
+                lineNumberToDelete++;
             }
-
-            temp.close();
             file.close();
-
-            const char * p = filePath.c_str();
-            remove(p);
-            rename("..\\files\\temp.txt", p);
+            temp.close();
+            remove(filePath.c_str());
+            rename("..\\files\\temp.txt", filePath.c_str());
         }
     }
+
+    /**
+     * @brief Function removes password from file
+     * @param filePath
+     */
 
     auto searchPassword(std::string filePath) -> void {
         std::string line;
@@ -360,6 +447,11 @@ namespace operations {
         std::fstream temp;
         temp.open("..\\files\\temp.txt");
     }
+
+    /**
+     * @brief Function searches password by user input
+     * @param filePath Path to file
+     */
 
     auto sortPasswords(std::string filePath) -> void {
         std::fstream file;
@@ -388,14 +480,6 @@ namespace operations {
                     std::cout << "Category is too short, try again" << std::endl;
                     std::cin >> category;
                 }
-                while (!file.eof()) {
-                    std::string line;
-                    std::getline(file, line);
-                    std::cout << line << std::endl;
-                    if (line.find(category) != std::string::npos) {
-                        std::cout << line << std::endl;
-                    }
-                }
                 break;
             case 2:
                 std::cout << "Sorting by login..." << std::endl;
@@ -408,6 +492,12 @@ namespace operations {
                 break;
         }
     }
+
+    /**
+     * @brief Function sorts passwords by category, login, email or website
+     * @param filePath Path to file
+     * @return Passwords sorted by category, login, email or website
+     */
 
     auto addCategory(std::string filePath) -> void {
 

@@ -40,7 +40,7 @@ auto main() -> int{
     if(isLogIn) {
 
         time_t timeNow = time(0);
-        //login::saveTime(timeNow, filePath);
+        login::saveTime(timeNow, filePath);
 
         while(!quit)
         {
@@ -52,9 +52,30 @@ auto main() -> int{
             std::cout << "5: remove password \n" << std::endl;
             std::cout << "Enter operation: \n";
 
-            /*std::cout <<"wyniki szyfrowania" << std::endl;
-            std::cout << cipher::dcrypt(cipher::encrypt("123321", 5), 5) << std::endl;
-            std::cout << cipher::encrypt("123321", 5) << std::endl;*/
+
+
+            {
+                std::cout << "wyniki szyfrowania" << std::endl;
+                std::cout << cipher::dcrypt(cipher::encrypt("lol123\n"
+                                                            "\n"
+                                                            "Fri Jun 17 13:49:31 2022\n"
+                                                            "\n"
+                                                            "Password | Category | Login | E-mail | Site | Note\n"
+                                                            "-----------------------------------------------------------\n"
+                                                            "GN4l76$@8g@U | dog | elo5 | elo@gmail.com | messanger | nic\n"
+                                                            "8q#!LXZuJv%p | niewiem | lol123 | asda@gasd.pl | dasd.pl | haslo",
+                                                            2), 2) << std::endl;
+                std::cout << std::endl;
+
+
+                std::string currentLine;
+                std::ifstream file(filePath);
+                while (std::getline(file, currentLine)) {
+                    std::cout << cipher::dcrypt(currentLine, 2) << std::endl;
+                }
+            }
+
+
 
             std::cin >> choiceOption;
 
