@@ -2,6 +2,10 @@
 #include <fstream>
 #include <chrono>
 #include <thread>
+#include <vector>
+#include <sstream>
+#include <regex>
+#include <algorithm>
 #include "Operations.hpp"
 
 namespace operations {
@@ -193,7 +197,7 @@ namespace operations {
                 std::cout << "Enter new note: ";
                 std::cin >> note;
                 file.open(filePath, std::ios::app);
-                file << password << " | " << category << " | " << login << " | " << email << " | " << website << " | "
+                file << '-' << password << '-' << " | " << category << " | " << login << " | " << email << " | " << website << " | "
                      << note;
                 file.close();
             case 2:
@@ -243,7 +247,7 @@ namespace operations {
                         std::cout << "Saving..." << std::endl;
                         std::ofstream file;
                         file.open(filePath, std::ios::app);
-                        file << password << " | " << category << " | " << login << " | " << email << " | " << website
+                        file << '-' << password << '-' << " | " << category << " | " << login << " | " << email << " | " << website
                              << " | " << note;
                         file.close();
                         std::cout << "Saved!" << std::endl;
@@ -479,38 +483,62 @@ namespace operations {
         std::fstream file;
         file.open(filePath);
 
+        std::vector<std::string> passwords;
+        std::string line;
+        std::regex wordRegex("-[a-zA-Z0-9!%!#$@%^&*()/]+-");
+        while (std::getline(file, line)) {
+            std::string word;
+            std::stringstream ss(line);
+            while (ss >> word) {
+                if (regex_match(word, wordRegex)) {
+                    passwords.push_back(word);
+                }
+                }
+            }
+        for (int i = 0; i < passwords.size(); i++) {
+            std::cout << passwords[i] << std::endl;
+        }
+
+
+
         std::string category;
         std::string login;
         std::string email;
         std::string website;
 
         std::cout << "Enter sort type: " << std::endl;
-        std::cout << "1. Sort by category" << std::endl;
-        std::cout << "2. Sort by login" << std::endl;
-        std::cout << "3. Sort by email" << std::endl;
-        std::cout << "4. Sort by website" << std::endl;
+        std::cout << "1. Length" << std::endl;
+        std::cout << "2. Alphabet" << std::endl;
+        std::cout << "3. Category" << std::endl;
+        std::cout << "4. Login" << std::endl;
+        std::cout << "5. Email" << std::endl;
+        std::cout << "6. Back to menu" << std::endl;
 
         int sortType;
+        std::cout << "Enter sort type: \n";
         std::cin >> sortType;
 
         switch (sortType) {
             case 1:
-                std::cout << "Sorting by category..." << std::endl;
-                std::cout << "Enter category: " << std::endl;
-                std::cin >> category;
-                while (category.length() < 1) {
-                    std::cout << "Category is too short, try again" << std::endl;
-                    std::cin >> category;
-                }
+                std::cout << "Sorting by length..." << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 break;
             case 2:
-                std::cout << "Sorting by login..." << std::endl;
+                std::cout << "Sorting by alphabet..." << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 break;
             case 3:
-                std::cout << "Sorting by email..." << std::endl;
-                break;
+                std::cout << "Sorting by category..." << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
             case 4:
-                std::cout << "Sorting by website..." << std::endl;
+                std::cout << "Sorting by login..." << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            case 5:
+                std::cout << "Sorting by email..." << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            case 6:
+                std::cout << "Back to menu..." << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 break;
         }
     }
