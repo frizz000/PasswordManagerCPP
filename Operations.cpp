@@ -5,6 +5,7 @@
 #include <vector>
 #include <regex>
 #include "Operations.hpp"
+#include "Cipher.hpp"
 
 namespace operations {
 
@@ -23,18 +24,18 @@ namespace operations {
         std::cout << "This program is made by: Piotr Jalocha\n" << std::endl;
     }
 
-    /**
-     * @brief Help for the user
-     * @param time
-     */
-
     auto openFile() -> std::string {
 
         std::string filePath;
+        std::string fileName;
+        std::string password;
+        int key;
+        std::ofstream file;
 
         std::cout << "Choose option:\n" << std::endl <<
                   "1 - choose file path from program\n"
-                  "2 - write absolute path to your file\n" << std::endl;
+                  "2 - write absolute path to your file\n"
+                  "3 - create new file\n" << std::endl;
 
         int choice;
         std::cout << "Enter number:";
@@ -66,6 +67,59 @@ namespace operations {
                 std::cout << "Enter your absolute file path \n"
                              "(i.e. G:\\szkola\\PJC\\PasswordManagerCPP\\files\\login.txt): ";
                 std::cin >> filePath;
+                while (filePath.length() == 0) {
+                    std::cout << "Your file path is empty. Try again: ";
+                    std::cout << "Enter your absolute file path \n"
+                                 "(i.e. G:\\szkola\\PJC\\PasswordManagerCPP\\files\\login.txt): ";
+                    std::cin >> filePath;
+                }
+                while (filePath.find("\\") == std::string::npos) {
+                    std::cout << "Your file path is wrong" << std::endl;
+                    std::cout << "Enter your absolute file path \n"
+                                 "(i.e. G:\\szkola\\PJC\\PasswordManagerCPP\\files\\login.txt): ";
+                    std::cin >> filePath;
+                }
+                while (filePath.find(".txt") == std::string::npos) {
+                    std::cout << "Your file path has to end with .txt" << std::endl;
+                    std::cout << "Enter your absolute file path \n"
+                                 "(i.e. G:\\szkola\\PJC\\PasswordManagerCPP\\files\\login.txt): ";
+                    std::cin >> filePath;
+                }
+                while (filePath.find("G:\\") == std::string::npos && filePath.find("C:\\") == std::string::npos &&
+                        filePath.find("D:\\") == std::string::npos && filePath.find("E:\\") == std::string::npos &&
+                        filePath.find("F:\\") == std::string::npos && filePath.find("H:\\") == std::string::npos &&
+                        filePath.find("I:\\") == std::string::npos && filePath.find("J:\\") == std::string::npos &&
+                        filePath.find("K:\\") == std::string::npos && filePath.find("L:\\") == std::string::npos &&
+                        filePath.find("M:\\") == std::string::npos && filePath.find("N:\\") == std::string::npos &&
+                        filePath.find("O:\\") == std::string::npos && filePath.find("P:\\") == std::string::npos &&
+                        filePath.find("Q:\\") == std::string::npos && filePath.find("R:\\") == std::string::npos &&
+                        filePath.find("S:\\") == std::string::npos && filePath.find("T:\\") == std::string::npos &&
+                        filePath.find("U:\\") == std::string::npos && filePath.find("V:\\") == std::string::npos &&
+                        filePath.find("W:\\") == std::string::npos && filePath.find("X:\\") == std::string::npos &&
+                        filePath.find("Y:\\") == std::string::npos && filePath.find("Z:\\") == std::string::npos) {
+                    std::cout << "Your file path is wrong" << std::endl;
+                    std::cout << "Enter your absolute file path \n"
+                                 "(i.e. G:\\szkola\\PJC\\PasswordManagerCPP\\files\\login.txt): ";
+                    std::cin >> filePath;
+                }
+                std::cout << "Your file path is: " << filePath << std::endl;
+                break;
+            case 3:
+                std::cout << "Enter file name:";
+                std::cin >> fileName;
+                std::cout << "Enter new password for file" << std::endl;
+                std::cin >> password;
+                std::cout << "Enter key to password: ";
+                std::cin >> key;
+
+                file.open("..\\files\\" + fileName + ".txt");
+                file << cipher::encrypt(password, key)  << std::endl;
+                file << "  Password   | Category |   Login  |     E-mail     |     Site     |     Notes     " << std::endl;
+                file.close();
+
+                filePath = "..\\files\\" + fileName + ".txt";
+
+                std::cout << "File created" << std::endl;
                 break;
             default:
                 std::cout << "Invalid file path" << std::endl;
@@ -75,15 +129,38 @@ namespace operations {
         return filePath;
     }
 
+    auto deleteFile(std::string filePath) -> void {
+        std::string fileName;
+        std::cout << "Remember you can't delete file if it is opened" << std::endl;
+        std::cout << "Enter file name to remove: ";
+        std::cin >> fileName;
+        fileName = "..\\files\\" + fileName + ".txt";
+
+        if (fileName == filePath) {
+            std::cout << "You can't delete opened file" << std::endl;
+            deleteFile(filePath);
+        }
+
+        std::cout << "Are you sure you want to remove file? (y/n)";
+        char choice;
+        std::cin >> choice;
+        if (choice == 'y') {
+            std::remove(fileName.c_str());
+            std::cout << "File removed" << std::endl;
+        } else if (choice == 'n') {
+            std::cout << "File not removed" << std::endl;
+        } else {
+            std::cout << "Invalid choice" << std::endl;
+            deleteFile(filePath);
+        }
+    }
+
     auto quit() -> void {
         std::cout << "Goodbye!\n"
                      "ps. Mr. Kwiatkowski is a cool teacher" << std::endl;
         exit(0);
     }
 
-    /**
-     * @brief quit program
-     */
 
     auto addPassword(std::string filePath) -> void {
         srand(time(NULL));
@@ -268,25 +345,19 @@ namespace operations {
         }
     }
 
-    /**
-     * @brief Function adds new password to file by user input or random password grenated by program
-     * @param filePath Path to file
-     */
 
     auto show(std::string filePath) -> void {
         std::ifstream file;
         file.open(filePath);
-        std::string line;
-        while (std::getline(file, line)) {
-            std::cout << line << std::endl;
+        int numberLine = 0;
+        while (!file.eof()) {
+            std::string line;
+            std::getline(file, line);
+            std::cout << numberLine << ". " << line << std::endl;
+            numberLine++;
         }
+        std::cout << std::endl;
     }
-
-    /**
-     * @brief Function shows all passwords in file
-     * @param filePath Path to file
-     *
-     */
 
     auto editPassword(std::string filePath) -> void {
         std::ifstream file;
@@ -388,15 +459,10 @@ namespace operations {
         file.close();
         temp.close();
         remove(filePath.c_str());
-        rename("temp2.txt", filePath.c_str());
+        rename("..\\files\\temp2.txt", filePath.c_str());
 
         std::cout << "Password changed successfully" << std::endl;
     }
-
-    /**
-     * @brief Function edits password by user input
-     * @param filePath Path to file
-     */
 
     auto removePassword(std::string filePath) -> void {
         std::fstream file;
@@ -440,11 +506,6 @@ namespace operations {
         }
     }
 
-    /**
-     * @brief Function removes password from file
-     * @param filePath
-     */
-
     auto searchPassword(std::string filePath) -> void {
         std::fstream file;
         std::string word;
@@ -476,11 +537,6 @@ namespace operations {
 
         std::cout << std::endl;
     }
-
-    /**
-     * @brief Function searches password by user input
-     * @param filePath Path to file
-     */
 
     auto sortPasswords(std::string filePath) -> void {
         std::fstream file;
@@ -633,12 +689,6 @@ namespace operations {
         }
     }
 
-    /**
-     * @brief Function sorts passwords by category, login, email or website
-     * @param filePath Path to file
-     * @return Passwords sorted by category, login, email or website
-     */
-
     auto addCategory(std::string filePath) -> void {
         std::ofstream file;
         file.open(filePath, std::ios::app);
@@ -661,11 +711,6 @@ namespace operations {
         std::cout << "Category added\n" << std::endl;
         file.close();
     }
-    /**
-     * @brief Function adds category to file
-     * @param filePath Path to file
-     *
-     */
 
     auto removeCategory(std::string filePath) -> void {
         std::fstream file;
@@ -707,10 +752,5 @@ namespace operations {
         }
         std::cout << "Category removed\n" << std::endl;
     }
-    /**
-     * @brief Function removes category from file
-     * @param filePath Path to file
-     *
-     */
 }
 

@@ -14,12 +14,6 @@ namespace cipher{
         return encryptedMessage;
     }
 
-    /**
-     * @brief Decrypts a message using a key
-     * @param message
-     * @param key
-     */
-
     auto dcrypt(const std::string& message, const std::uint32_t key) -> std::string {
         std::string decryptedMessage;
         decryptedMessage.reserve(message.size());
@@ -29,10 +23,4 @@ namespace cipher{
         }
         return decryptedMessage;
     }
-
-    /**
-     * @brief Encrypts a message using a key
-     * @param message
-     * @param key
-     */
 }

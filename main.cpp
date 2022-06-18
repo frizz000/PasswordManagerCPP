@@ -12,7 +12,6 @@ auto main() -> int{
     int choiceOption;
     std::string filePath;
     int logAttempts = 0;
-    system("Color 0E");
 
 
     while(!isLogIn){
@@ -40,36 +39,13 @@ auto main() -> int{
         while(!quit)
         {
             std::cout << "Available operations: " << std::endl;;
-            std::cout << "1: search password    6: add category" << std::endl;
-            std::cout << "2: sort passwords     7: remove category" << std::endl;
-            std::cout << "3: add password       8: help menu" << std::endl;
-            std::cout << "4: edit password      9: quit program" << std::endl;
-            std::cout << "5: remove password    10: show file\n" << std::endl;
+            std::cout << "1: search password    7: remove category" << std::endl;
+            std::cout << "2: sort passwords     8: show file" << std::endl;
+            std::cout << "3: add password       9: remove file" << std::endl;
+            std::cout << "4: edit password      10: help menu" << std::endl;
+            std::cout << "5: remove password    11: quit program\n" << std::endl;
+            std::cout << "6: add category" << std::endl;
             std::cout << "Enter operation: \n";
-
-
-
-            /*{
-                std::cout << "wyniki szyfrowania" << std::endl;
-                std::cout << cipher::dcrypt(cipher::encrypt("lol123\n"
-                                                            "\n"
-                                                            "Fri Jun 17 13:49:31 2022\n"
-                                                            "\n"
-                                                            "Password | Category | Login | E-mail | Site | Note\n"
-                                                            "-----------------------------------------------------------\n"
-                                                            "GN4l76$@8g@U | dog | elo5 | elo@gmail.com | messanger | nic\n"
-                                                            "8q#!LXZuJv%p | niewiem | lol123 | asda@gasd.pl | dasd.pl | haslo",
-                                                            2), 2) << std::endl;
-                std::cout << std::endl;
-
-
-                std::string currentLine;
-                std::ifstream file(filePath);
-                while (std::getline(file, currentLine)) {
-                    std::cout << cipher::dcrypt(currentLine, 2) << std::endl;
-                }
-            }*/
-
 
 
             std::cin >> choiceOption;
@@ -106,17 +82,22 @@ auto main() -> int{
                     operations::removeCategory(filePath);
                     break;
                 case 8:
+                    std::cout << "You chose 'show file'" << std::endl;
+                    operations::show(filePath);
+                    break;
+                case 9:
+                    std::cout << "You chose 'remove file'" << std::endl;
+                    operations::deleteFile(filePath);
+                    break;
+                case 10:
                     std::cout << "You chose 'help menu'" << std::endl;
                     operations::help();
                     break;
-                case 9:
+                case 11:
                     std::cout << "You chose 'quit program'" << std::endl;
                     quit = true;
                     operations::quit();
                     break;
-                case 10:
-                    std::cout << "You chose 'show file'" << std::endl;
-                    operations::show(filePath);
                 default:
                     std::cout<<"Operation not recognized, try again." << std::endl;
                     break;

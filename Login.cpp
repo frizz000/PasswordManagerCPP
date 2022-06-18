@@ -12,62 +12,42 @@ namespace login {
         file.clear();
         file.seekg(0, std::ios::beg);
 
-        if (file.is_open()) {
 
         std::getline(file, pass);
 
-            std::string userPassword;
-            int kay;
+        std::string userPassword;
+        int kay;
 
-            std::cout << "Password: " << std::endl;
-            std::cin >> userPassword;
+        std::cout << "Password: " << std::endl;
+        std::cin >> userPassword;
 
-            std::cout << "Key: " << std::endl;
-            std::cin >> kay;
+        std::cout << "Key: " << std::endl;
+        std::cin >> kay;
 
-            std::string globalPass;
+        std::string globalPass;
 
-            globalPass = cipher::dcrypt(pass, kay);
+        globalPass = cipher::dcrypt(pass, kay);
 
 
-            if (userPassword == globalPass) {
-                std::cout << "Correct password \n" << std::endl;
-                file.close();
-                return true;
-            } else {
-                std::cout << "Incorrect password, try again (remember you have 3 attempts) \n" << std::endl;
-                return false;
-            }
+        if (userPassword == globalPass) {
+            std::cout << "Correct password \n" << std::endl;
+            file.close();
+            return true;
+        } else {
+            std::cout << "Incorrect password, try again (remember you have 3 attempts) \n" << std::endl;
+            return false;
+        }
 
-        } else
-            std::cout << "Access to file denied or your file path is wrong" << std::endl;
-        return false;
     }
-
-    /**
-     * @brief Used to login in the program
-     * @param userPassword, kay
-     * @return true if the password is correct, false if not
-     */
 
     auto saveTime(time_t time, std::string filePath) -> void {
 
         std::fstream loginsOut;
-        loginsOut.open(filePath, std::ios::out | std::ios::app);
+        loginsOut.open("..\\files\\logList.txt", std::ios::out | std::ios::app);
 
-
-        if (loginsOut.is_open()) {
-
-            char *dt = std::ctime(&time);
-               loginsOut << dt << std::endl;
-
-        } else
-            std::cout << "Saving time went wrong :(" << std::endl;
-
+        char *dt = std::ctime(&time);
+        loginsOut << filePath << " <--- Last login time -- " << dt << std::endl;
         loginsOut.close();
+
     }
-    /**
-     * @brief Saves the time of the last login
-     * @param time
-     */
 }
