@@ -3,9 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <vector>
-#include <sstream>
 #include <regex>
-#include <algorithm>
 #include "Operations.hpp"
 
 namespace operations {
@@ -197,8 +195,9 @@ namespace operations {
                 std::cout << "Enter new note: ";
                 std::cin >> note;
                 file.open(filePath, std::ios::app);
-                file << '-' << password << '-' << " | " << category << " | " << login << " | " << email << " | " << website << " | "
-                     << note;
+                file << '-' << password << '-' << " | " << '=' << category << '=' << " | " << ':' << login << ':'
+                     << " | " << '-' << email << ':' << " | " << '=' << website << ':'
+                     << " | " << note;
                 file.close();
             case 2:
                 std::cout << "Enter password length (8-24): ";
@@ -247,7 +246,8 @@ namespace operations {
                         std::cout << "Saving..." << std::endl;
                         std::ofstream file;
                         file.open(filePath, std::ios::app);
-                        file << '-' << password << '-' << " | " << category << " | " << login << " | " << email << " | " << website
+                        file << '-' << password << '-' << " | " << '=' << category << '=' << " | " << ':' << login
+                             << ':' << " | " << '-' << email << ':' << " | " << '=' << website << ':'
                              << " | " << note;
                         file.close();
                         std::cout << "Saved!" << std::endl;
@@ -273,15 +273,17 @@ namespace operations {
      * @param filePath Path to file
      */
 
-    auto fileStruct(std::string filePath) -> void {
-        std::fstream file;
+    auto show(std::string filePath) -> void {
+        std::ifstream file;
         file.open(filePath);
         std::string line;
-        file << "Password | Category | Login | E-mail | Site | Note" << std::endl;
+        while (std::getline(file, line)) {
+            std::cout << line << std::endl;
+        }
     }
 
     /**
-     * @brief Function creates new file with header
+     * @brief Function shows all passwords in file
      * @param filePath Path to file
      *
      */
@@ -292,7 +294,7 @@ namespace operations {
         int numberLine = 0;
         std::string lineSearch;
 
-        std::ofstream temp ("..\\files\\temp.txt");
+        std::ofstream temp("..\\files\\temp.txt");
 
         std::string passwordToEdit;
         std::string newPassword;
@@ -376,8 +378,8 @@ namespace operations {
         }
         std::cout << "Password is correct\n" << std::endl;
 
-        while (file >> lineSearch){
-            if (lineSearch == passwordToEdit){
+        while (file >> lineSearch) {
+            if (lineSearch == passwordToEdit) {
                 lineSearch = newPassword;
             }
             lineSearch += " ";
@@ -390,6 +392,7 @@ namespace operations {
 
         std::cout << "Password changed successfully" << std::endl;
     }
+
     /**
      * @brief Function edits password by user input
      * @param filePath Path to file
@@ -398,7 +401,7 @@ namespace operations {
     auto removePassword(std::string filePath) -> void {
         std::fstream file;
         std::string line;
-        int numberLine= 0;
+        int numberLine = 0;
         int passwordLine;
         int lineNumberToDelete = 1;
 
@@ -419,7 +422,7 @@ namespace operations {
         std::cout << "Enter passwordLine line to remove: ";
         std::cin >> passwordLine;
 
-        if (passwordLine < 5 || passwordLine > numberLine) {
+        if (passwordLine < 2 || passwordLine > numberLine) {
             std::cout << "Invalid number\n" << std::endl;
             removePassword(filePath);
         } else {
@@ -445,7 +448,7 @@ namespace operations {
     auto searchPassword(std::string filePath) -> void {
         std::fstream file;
         std::string word;
-        int numberLine= 0;
+        int numberLine = 0;
         int counter = 0;
 
         file.open(filePath.c_str());
@@ -484,35 +487,81 @@ namespace operations {
         file.open(filePath);
 
         std::vector<std::string> passwords;
-        std::string line;
-        std::regex wordRegex("-[a-zA-Z0-9!%!#$@%^&*()/]+-");
-        while (std::getline(file, line)) {
+        std::string lineP;
+        std::regex wordRegex("-[a-zA-Z0-9!#$@%^&*()/]+-");
+        while (std::getline(file, lineP)) {
             std::string word;
-            std::stringstream ss(line);
+            std::stringstream ss(lineP);
             while (ss >> word) {
                 if (regex_match(word, wordRegex)) {
                     passwords.push_back(word);
                 }
-                }
             }
-        for (int i = 0; i < passwords.size(); i++) {
-            std::cout << passwords[i] << std::endl;
         }
 
 
+        std::vector<std::string> categories;
+        std::string lineC;
+        std::regex wordRegexC("=[a-zA-Z0-9!#$@%^&*()/]+=");
+        while (std::getline(file, lineC)) {
+            std::string word;
+            std::stringstream ss(lineC);
+            while (ss >> word) {
+                if (regex_match(word, wordRegexC)) {
+                    categories.push_back(word);
+                }
+            }
+        }
 
-        std::string category;
-        std::string login;
-        std::string email;
-        std::string website;
+
+        std::vector<std::string> logins;
+        std::string lineL;
+        std::regex wordRegexL(":[a-zA-Z0-9!#$@%^&*()/]+:");
+        while (std::getline(file, lineL)) {
+            std::string word;
+            std::stringstream ss(lineL);
+            while (ss >> word) {
+                if (regex_match(word, wordRegexL)) {
+                    logins.push_back(word);
+                }
+            }
+        }
+
+
+        std::vector<std::string> emails;
+        std::string lineE;
+        std::regex wordRegexE("-[a-zA-Z0-9!#$@%.^&*()/]+:");
+        while (std::getline(file, lineE)) {
+            std::string word;
+            std::stringstream ss(lineE);
+            while (ss >> word) {
+                if (regex_match(word, wordRegexE)) {
+                    emails.push_back(word);
+                }
+            }
+        }
+
+        std::vector<std::string> websites;
+        std::string lineW;
+        std::regex wordRegexW("=[a-zA-Z0-9!#$@%.^&*()/]+:");
+        while (std::getline(file, lineW)) {
+            std::string word;
+            std::stringstream ss(lineW);
+            while (ss >> word) {
+                if (regex_match(word, wordRegexW)) {
+                    websites.push_back(word);
+                }
+            }
+        }
 
         std::cout << "Enter sort type: " << std::endl;
-        std::cout << "1. Length" << std::endl;
-        std::cout << "2. Alphabet" << std::endl;
+        std::cout << "1. Length of password" << std::endl;
+        std::cout << "2. Alphabetically of password" << std::endl;
         std::cout << "3. Category" << std::endl;
         std::cout << "4. Login" << std::endl;
         std::cout << "5. Email" << std::endl;
-        std::cout << "6. Back to menu" << std::endl;
+        std::cout << "6. Website" << std::endl;
+        std::cout << "7. Back to menu" << std::endl;
 
         int sortType;
         std::cout << "Enter sort type: \n";
@@ -522,22 +571,63 @@ namespace operations {
             case 1:
                 std::cout << "Sorting by length..." << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::sort(passwords.begin(), passwords.end(), [](const std::string &a, const std::string &b) {
+                    return a.length() < b.length();
+                });
+                for (auto &i: passwords) {
+                    std::cout << i << std::endl;
+                }
+                std::cout << std::endl;
                 break;
             case 2:
                 std::cout << "Sorting by alphabet..." << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::sort(passwords.begin(), passwords.end());
+                for (auto &i: passwords) {
+                    std::cout << i << std::endl;
+                }
+                std::cout << std::endl;
                 break;
             case 3:
                 std::cout << "Sorting by category..." << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::sort(categories.begin(), categories.end());
+                for (auto &i: categories) {
+                    std::cout << i << std::endl;
+                }
+                std::cout << std::endl;
+                break;
             case 4:
                 std::cout << "Sorting by login..." << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::sort(logins.begin(), logins.end());
+                for (auto &i: logins) {
+                    std::cout << i << std::endl;
+                }
+                std::cout << std::endl;
+                break;
             case 5:
                 std::cout << "Sorting by email..." << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::sort(emails.begin(), emails.end());
+                for (auto &i: emails) {
+                    std::cout << i << std::endl;
+                }
+                std::cout << std::endl;
             case 6:
+                std::cout << "Sorting by website..." << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                std::sort(websites.begin(), websites.end());
+                for (auto &i: websites) {
+                    std::cout << i << std::endl;
+                }
+                std::cout << std::endl;
+            case 7:
                 std::cout << "Back to menu..." << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                break;
+            default:
+                std::cout << "Wrong input..." << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 break;
         }
@@ -550,10 +640,77 @@ namespace operations {
      */
 
     auto addCategory(std::string filePath) -> void {
+        std::ofstream file;
+        file.open(filePath, std::ios::app);
+        std::string categoryName;
 
+
+        std::string password = "         ";
+        std::string login = "         ";
+        std::string email = "         ";
+        std::string website = "         ";
+        std::string note = "         ";
+
+
+        std::cout << "Enter category: " << std::endl;
+        std::cin >> categoryName;
+        file << '-' << password << '-' << " | " << '=' << categoryName << '=' << " | " << ':' << login << ':' << " | "
+             << '-' << email << ':' << " | " << '=' << website << ':'
+             << " | " << note;
+
+        std::cout << "Category added\n" << std::endl;
+        file.close();
     }
+    /**
+     * @brief Function adds category to file
+     * @param filePath Path to file
+     *
+     */
+
     auto removeCategory(std::string filePath) -> void {
+        std::fstream file;
+        int numberLine = 0;
+        int categoryLine;
+        int lineNumberToDelete = 1;
 
+        file.open(filePath);
+
+        std::fstream temp;
+        temp.open("..\\files\\temp.txt", std::fstream::out);
+
+
+        while (!file.eof()) {
+            std::string line;
+            std::getline(file, line);
+            std::cout << numberLine << ". " << line << std::endl;
+            numberLine++;
+        }
+        std::cout << std::endl;
+
+        std::cout << "Enter category to remove: ";
+        std::cout << "Remember this removes all passwords in this category" << std::endl;
+        std::cin >> categoryLine;
+
+        while (!file.eof()) {
+            std::string line;
+            std::getline(file, line);
+            if (line.find(categoryLine) != std::string::npos) {
+                lineNumberToDelete++;
+            } else {
+                temp << line << std::endl;
+            }
+
+            file.close();
+            temp.close();
+            remove(filePath.c_str());
+            rename("..\\files\\temp.txt", filePath.c_str());
+        }
+        std::cout << "Category removed\n" << std::endl;
     }
+    /**
+     * @brief Function removes category from file
+     * @param filePath Path to file
+     *
+     */
 }
 

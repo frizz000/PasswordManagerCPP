@@ -15,8 +15,6 @@ namespace login {
         if (file.is_open()) {
 
         std::getline(file, pass);
-        //std::cout << "encrypt message: " << pass << std::endl;
-
 
             std::string userPassword;
             int kay;
@@ -31,7 +29,6 @@ namespace login {
 
             globalPass = cipher::dcrypt(pass, kay);
 
-            //globalPass = "123";
 
             if (userPassword == globalPass) {
                 std::cout << "Correct password \n" << std::endl;

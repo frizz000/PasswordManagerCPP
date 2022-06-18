@@ -7,7 +7,7 @@ namespace operations {
     auto openFile() -> std::string;
     auto quit() -> void;
     auto addPassword(std::string filePath) -> void;
-    auto fileStruct(std::string filePath) -> void;
+    auto show(std::string filePath) -> void;
     auto editPassword(std::string filePath) -> void;
     auto removePassword(std::string filePath) -> void;
     auto sortPasswords(std::string filePath) -> void;

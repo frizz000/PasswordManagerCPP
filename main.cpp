@@ -1,12 +1,7 @@
 #include <iostream>
-#include <fstream>
 #include <vector>
-#include <array>
-#include <algorithm>
-#include <sstream>
 #include <ctime>
 #include <dirent.h>
-#include "Cipher.hpp"
 #include "Operations.hpp"
 #include "Login.hpp"
 
@@ -17,6 +12,7 @@ auto main() -> int{
     int choiceOption;
     std::string filePath;
     int logAttempts = 0;
+    system("Color 0E");
 
 
     while(!isLogIn){
@@ -24,7 +20,6 @@ auto main() -> int{
                      " /__)  _   _   _         _  _/   /|/|  _     _   _  _  _ \n"
                      "/     (/ _)  _)  ((/ () /  (/   /   | (/ /) (/  (/ (- /  \n"
                      "                                               _/        " << std::endl;
-
         filePath = operations::openFile();
 
         std::cout << "LOG IN" << std::endl;
@@ -49,7 +44,7 @@ auto main() -> int{
             std::cout << "2: sort passwords     7: remove category" << std::endl;
             std::cout << "3: add password       8: help menu" << std::endl;
             std::cout << "4: edit password      9: quit program" << std::endl;
-            std::cout << "5: remove password \n" << std::endl;
+            std::cout << "5: remove password    10: show file\n" << std::endl;
             std::cout << "Enter operation: \n";
 
 
@@ -119,6 +114,9 @@ auto main() -> int{
                     quit = true;
                     operations::quit();
                     break;
+                case 10:
+                    std::cout << "You chose 'show file'" << std::endl;
+                    operations::show(filePath);
                 default:
                     std::cout<<"Operation not recognized, try again." << std::endl;
                     break;
