@@ -198,7 +198,6 @@ namespace operations {
 
 
     auto addPassword(std::string filePath) -> void {
-        srand(time(NULL));
 
         std::string password;
         std::string category;
@@ -208,11 +207,10 @@ namespace operations {
         std::string note;
         int passwordLength;
         std::ofstream file;
-
-        std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
-        std::string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        std::string symbol = "!@#$%&";
-        std::string number = "0123456789";
+        char specialSymbols;
+        char lowercaseLetters;
+        char uppercaseLetters;
+        char numbers;
 
         std::cout << "Choose option:\n" << std::endl <<
                   "1 - If you want to add password by self\n"
@@ -333,83 +331,79 @@ namespace operations {
             case 2:
                 std::cout << "Enter password length (8-24): ";
                 std::cin >> passwordLength;
+                std::cout << "Type y/n if you want to use special symbols: ";
+                std::cin >> specialSymbols;
+                std::cout << "Type y/n if you want to use lowercase letters: ";
+                std::cin >> lowercaseLetters;
+                std::cout << "Type y/n if you want to use uppercase letters: ";
+                std::cin >> uppercaseLetters;
+                std::cout << "Type y/n if you want to use numbers: ";
+                std::cin >> numbers;
+
                 if (passwordLength < 8 || passwordLength > 24) {
                     std::cout << "Invalid password length" << std::endl;
                     addPassword(filePath);
                 } else {
-                    for (int i = 0; i < passwordLength; i++) {
-                        int random = rand() % 4;
-                        switch (random) {
-                            case 0:
-                                password += alphabet[rand() % alphabet.length()];
-                                break;
-                            case 1:
-                                password += ALPHABET[rand() % ALPHABET.length()];
-                                break;
-                            case 2:
-                                password += symbol[rand() % symbol.length()];
-                                break;
-                            case 3:
-                                password += number[rand() % number.length()];
-                                break;
+                    password = operations::generatePassword(passwordLength, specialSymbols, lowercaseLetters,
+                                                       uppercaseLetters, numbers);
+                }
+
+
+                std::cout << "Your password is: " << password << std::endl;
+                std::cout << "Do you want to save it? (y/n)" << std::endl;
+                char saveChoice;
+                std::cin >> saveChoice;
+                if (saveChoice == 'y') {
+                    std::cout << "1. Enter new category \n" <<
+                              "2. Choose from the list \n";
+                    int choiceCategory;
+                    std::cout << "Enter your choice: ";
+                    std::cin >> choiceCategory;
+                    if (choiceCategory == 1) {
+                        std::cout << "Enter new category: \n";
+                        std::cin >> category;
+                        categories.push_back(category);
+                    } else if (choiceCategory == 2) {
+                        std::cout << "Choose from the list: \n";
+                        for (int i = 0; i < categories.size(); i++) {
+                            std::cout << i + 1 << ". " << categories[i] << std::endl;
                         }
-                    }
-                    std::cout << "Your password is: " << password << std::endl;
-                    std::cout << "Do you want to save it? (y/n)" << std::endl;
-                    char saveChoice;
-                    std::cin >> saveChoice;
-                    if (saveChoice == 'y') {
-                        std::cout << "1. Enter new category \n" <<
-                                  "2. Choose from the list \n";
-                        int choiceCategory;
+                        std::cout << std::endl;
+                        int choiceCategory2;
                         std::cout << "Enter your choice: ";
-                        std::cin >> choiceCategory;
-                        if (choiceCategory == 1) {
-                            std::cout << "Enter new category: \n";
-                            std::cin >> category;
-                            categories.push_back(category);
-                        } else if (choiceCategory == 2) {
-                            std::cout << "Choose from the list: \n";
-                            for (int i = 0; i < categories.size(); i++) {
-                                std::cout << i + 1 << ". " << categories[i] << std::endl;
-                            }
-                            std::cout << std::endl;
-                            int choiceCategory2;
-                            std::cout << "Enter your choice: ";
-                            std::cin >> choiceCategory2;
-                            category = categories[choiceCategory2 - 1];
-                        } else {
-                            std::cout << "Wrong input. Enter new category: ";
-                            addPassword(filePath);
-                        }
-                        std::cout << "Enter login: ";
-                        std::cin >> login;
-                        std::cout << "Enter email: ";
-                        std::cin >> email;
-                        while (email.find('@') == std::string::npos) {
-                            std::cout << "Email is incorrect, add '@'" << std::endl;
-                            std::cout << "Enter new email: ";
-                            std::cin >> email;
-                        }
-                        std::cout << "Enter website: ";
-                        std::cin >> website;
-                        std::cout << "Enter note: ";
-                        std::cin >> note;
-                        std::cout << "Saving..." << std::endl;
-                        std::ofstream file;
-                        file.open(filePath, std::ios::app);
-                        file << '-' << password << '-' << " | " << '=' << category << '=' << " | " << ':' << login
-                             << ':' << " | " << '-' << email << ':' << " | " << '=' << website << ':'
-                             << " | " << note;
-                        file.close();
-                        std::cout << "Saved!" << std::endl;
-                    } else if (saveChoice == 'n') {
-                        std::cout << "You chose no to save password, try again.\n" << std::endl;
-                        addPassword(filePath);
+                        std::cin >> choiceCategory2;
+                        category = categories[choiceCategory2 - 1];
                     } else {
-                        std::cout << "Invalid choice\n" << std::endl;
+                        std::cout << "Wrong input. Enter new category: ";
                         addPassword(filePath);
                     }
+                    std::cout << "Enter login: ";
+                    std::cin >> login;
+                    std::cout << "Enter email: ";
+                    std::cin >> email;
+                    while (email.find('@') == std::string::npos) {
+                        std::cout << "Email is incorrect, add '@'" << std::endl;
+                        std::cout << "Enter new email: ";
+                        std::cin >> email;
+                    }
+                    std::cout << "Enter website: ";
+                    std::cin >> website;
+                    std::cout << "Enter note: ";
+                    std::cin >> note;
+                    std::cout << "Saving..." << std::endl;
+                    std::ofstream file;
+                    file.open(filePath, std::ios::app);
+                    file << '-' << password << '-' << " | " << '=' << category << '=' << " | " << ':' << login
+                         << ':' << " | " << '-' << email << ':' << " | " << '=' << website << ':'
+                         << " | " << note;
+                    file.close();
+                    std::cout << "Saved!" << std::endl;
+                } else if (saveChoice == 'n') {
+                    std::cout << "You chose no to save password, try again.\n" << std::endl;
+                    addPassword(filePath);
+                } else {
+                    std::cout << "Invalid choice\n" << std::endl;
+                    addPassword(filePath);
                 }
             case 3:
                 std::cout << "Back to menu...\n" << std::endl;
@@ -419,7 +413,6 @@ namespace operations {
                 addPassword(filePath);
         }
     }
-
 
     auto show(std::string filePath) -> void {
         std::ifstream file;
@@ -601,7 +594,7 @@ namespace operations {
         }
     }
 
-    auto searchPassword(std::string filePath) -> void {
+    auto searchPassword(const std::string& filePath) -> void {
         std::fstream file;
         std::string word;
         int numberLine = 0;
@@ -648,7 +641,7 @@ namespace operations {
         }
     }
 
-    auto sortPasswords(std::string filePath) -> void {
+    auto sortPasswords(const std::string& filePath) -> void {
         std::fstream file;
         file.open(filePath);
 
@@ -661,20 +654,6 @@ namespace operations {
             while (ss >> word) {
                 if (regex_match(word, wordRegex)) {
                     passwords.push_back(word);
-                }
-            }
-        }
-
-
-        std::vector<std::string> categories;
-        std::string lineC;
-        std::regex wordRegexC("=[a-zA-Z0-9!#$@%^&*()/]+=");
-        while (std::getline(file, lineC)) {
-            std::string word;
-            std::stringstream ss(lineC);
-            while (ss >> word) {
-                if (regex_match(word, wordRegexC)) {
-                    categories.push_back(word);
                 }
             }
         }
@@ -799,7 +778,7 @@ namespace operations {
         }
     }
 
-    auto addCategory(std::string filePath) -> void {
+    auto addCategory() -> void {
         std::string categoryName;
 
         std::cout << "Category added!\n" << std::endl;
@@ -827,12 +806,12 @@ namespace operations {
             default:
                 std::cout << "Wrong input..." << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
-                addCategory(filePath);
+                addCategory();
         }
 
     }
 
-    auto removeCategory(std::string filePath) -> void {
+    auto removeCategory(const std::string filePath) -> void {
         std::fstream file;
         int numberLine = 0;
         std::string categoryNameToRemove;
@@ -893,6 +872,35 @@ namespace operations {
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 removeCategory(filePath);
         }
+    }
+    auto generatePassword(int passwordLength, char specialSymbols, char lowercaseLetters, char uppercaseLetters,
+                          char numbers) -> std::string {
+        std::string password;
+        srand(time(NULL));
+        std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
+        std::string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        std::string symbol = "!@#$%&";
+        std::string number = "0123456789";
+        std::string charsToMakePassword = "";
+
+        if (specialSymbols == 'y') {
+            charsToMakePassword += symbol;
+        }
+        if (lowercaseLetters == 'y') {
+            charsToMakePassword += alphabet;
+        }
+        if (uppercaseLetters == 'y') {
+            charsToMakePassword += ALPHABET;
+        }
+        if (numbers == 'y') {
+            charsToMakePassword += number;
+        }
+
+        for (int i = 0; i < passwordLength; i++) {
+            int random = rand() % charsToMakePassword.length();
+            password += charsToMakePassword[random];
+        }
+        return password;
     }
 }
 

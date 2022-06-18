@@ -75,7 +75,7 @@ auto main() -> int{
                     break;
                 case 6:
                     std::cout << "You chose 'add category'" << std::endl;
-                    operations::addCategory(filePath);
+                    operations::addCategory();
                     break;
                 case 7:
                     std::cout << "You chose 'remove category'" << std::endl;

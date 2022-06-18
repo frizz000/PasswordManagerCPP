@@ -58,14 +58,14 @@ namespace operations {
     * @param filePath
     */
 
-    auto sortPasswords(std::string filePath) -> void;
+    auto sortPasswords(const std::string& filePath) -> void;
 
     /**
      * @brief Function searches password by user input
      * @param filePath Path to file
      */
 
-    auto searchPassword(std::string filePath) -> void;
+    auto searchPassword(const std::string& filePath) -> void;
 
     /**
      * @brief Function sorts passwords by category, login, email or website
@@ -73,7 +73,7 @@ namespace operations {
      * @return Passwords sorted by category, login, email or website
      */
 
-    auto addCategory(std::string filePath) -> void;
+    auto addCategory() -> void;
 
     /**
      * @brief Function adds category to file
@@ -87,6 +87,14 @@ namespace operations {
      * @brief Function removes category from file
      * @param filePath Path to file
      *
+     */
+
+    auto generatePassword(int passwordLength, char specialSymbols, char lowercaseLetters, char uppercaseLetters, char numbers) -> std::string;
+
+    /**
+     * @brief Generates a random password
+     * @param passwordLength, specialSymbols, lowercaseLetters, uppercaseLetters, numbers
+     * @return password
      */
 
 }
