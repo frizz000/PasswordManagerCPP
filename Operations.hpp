@@ -7,7 +7,6 @@ namespace operations {
 
     /**
     * @brief Help for the user
-    * @param time
     */
 
     auto openFile() -> std::string;

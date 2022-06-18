@@ -43,8 +43,8 @@ auto main() -> int{
             std::cout << "2: sort passwords     8: show file" << std::endl;
             std::cout << "3: add password       9: remove file" << std::endl;
             std::cout << "4: edit password      10: help menu" << std::endl;
-            std::cout << "5: remove password    11: quit program\n" << std::endl;
-            std::cout << "6: add category" << std::endl;
+            std::cout << "5: remove password    11: quit program" << std::endl;
+            std::cout << "6: add category \n" << std::endl;
             std::cout << "Enter operation: \n";
 
 
